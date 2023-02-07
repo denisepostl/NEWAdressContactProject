@@ -11,6 +11,7 @@ adress/__init__.py
 adress/add_check.py
 adress/add_contact_gui.py
 adress/add_for_gui.py
+adress/add_only_one_second_adress.py
 adress/add_second.py
 adress/calculate_id.py
 adress/check_entry.py

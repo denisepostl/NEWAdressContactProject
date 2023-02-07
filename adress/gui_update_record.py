@@ -9,13 +9,14 @@ from PIL import Image, ImageTk
 from adress.query_search_by import QuerySearchBy
 from adress.update_for_gui import Updating
 from adress.add_second import AddSecondRecord
+from adress.add_only_one_second_adress import Accept_Adress
 import os
 from adress.add_check import Checking
 
 Profile = {1: ""}
 
 
-class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
+class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondRecord):
     db_name = 'database/adress_cat.db'
 
     def __init__(self):
@@ -286,45 +287,50 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
         self.tel1 = self.tree.item(self.tree.selection())['values'][5]
 
 
-        self.new = Tk()
-        self.new.title("Add-Second Tel.-Nr")
-        self.new.geometry('220x180')
-        self.new.configure(background=self.co0)
-        self.new.resizable(width=False, height=False)
+        self.get_id_for_check(self.GetFName, self.GetLName, self.tel1)
+        self.get_count_adr()
+        if self.c_id >= 2:
+            messagebox.showerror("Kontakt auswählen", "Dieser Kontakt hat schon zwei Adressen!")
+        else:
+            self.new = Tk()
+            self.new.title("Add-Second Tel.-Nr")
+            self.new.geometry('220x180')
+            self.new.configure(background=self.co0)
+            self.new.resizable(width=False, height=False)
 
-        # PLZ
-        label = Label (self.new, text='PLZ: ', bg=self.co0, fg=self.co1)
-        label.place(x=10, y=20, width= 40, height=22)
-        self.postcode = Entry(self.new)
-        self.postcode.place(x=60, y=20, width= 128, height=22)
+            # PLZ
+            label = Label (self.new, text='PLZ: ', bg=self.co0, fg=self.co1)
+            label.place(x=10, y=20, width= 40, height=22)
+            self.postcode = Entry(self.new)
+            self.postcode.place(x=60, y=20, width= 128, height=22)
 
-        # House Nr
-        l = Label (self.new, text='Haus-Nr: ', bg=self.co0, fg=self.co1)
-        l.place(x=6, y=50, width= 60, height=22)
-        self.housenumber = Entry(self.new)
-        self.housenumber.place(x=60, y=50, width= 128, height=22)
+            # House Nr
+            l = Label (self.new, text='Haus-Nr: ', bg=self.co0, fg=self.co1)
+            l.place(x=6, y=50, width= 60, height=22)
+            self.housenumber = Entry(self.new)
+            self.housenumber.place(x=60, y=50, width= 128, height=22)
 
-        # City
-        lb = Label (self.new, text='Ort: ', bg=self.co0, fg=self.co1)
-        lb.place(x=10, y=80, width= 40, height=22)
-        self.CITY = Entry(self.new)
-        self.CITY.place(x=60, y=80, width= 128, height=22)
+            # City
+            lb = Label (self.new, text='Ort: ', bg=self.co0, fg=self.co1)
+            lb.place(x=10, y=80, width= 40, height=22)
+            self.CITY = Entry(self.new)
+            self.CITY.place(x=60, y=80, width= 128, height=22)
 
-        # Straße
-        lbl = Label (self.new, text='Straße: ', bg=self.co0, fg=self.co1)
-        lbl.place(x=10, y=110, width= 40, height=22)
-        self.STREET = Entry(self.new)
-        self.STREET.place(x=60, y=110, width= 128, height=22)
+            # Straße
+            lbl = Label (self.new, text='Straße: ', bg=self.co0, fg=self.co1)
+            lbl.place(x=10, y=110, width= 40, height=22)
+            self.STREET = Entry(self.new)
+            self.STREET.place(x=60, y=110, width= 128, height=22)
 
-        self.l = Label(self.new, bg=self.co2)
-        self.l.place(x=0, y=0, width=280, height=10)
-        self.lbl = Label(self.new, bg=self.co2)
-        self.lbl.place(x=0, y=170, width=280, height=10)
+            self.l = Label(self.new, bg=self.co2)
+            self.l.place(x=0, y=0, width=280, height=10)
+            self.lbl = Label(self.new, bg=self.co2)
+            self.lbl.place(x=0, y=170, width=280, height=10)
 
-        button = Button(self.new, text='Änderungen speichern', bg=self.co2, fg=self.co0, command=self.adding_adress)
-        button.place(x=60, y=140, width= 128, height=22)
+            button = Button(self.new, text='Änderungen speichern', bg=self.co2, fg=self.co0, command=self.adding_adress)
+            button.place(x=60, y=140, width= 128, height=22)
 
-        self.new.mainloop()
+            self.new.mainloop()
 
     
     def adding_adress(self):
@@ -349,6 +355,7 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
             self.get_name_id(FirstName, LastName, self.tel1)
             self.add_adress_(str(plz), str(street), str(city), str(housenr), bool(0))
             self.new.destroy()
+            self.viewing_records()
 
     #------------------------Add-Second-TelefoneNumber------------------------------------#    
     def add_tel(self):
@@ -360,27 +367,31 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
         self.Get_LName = self.tree.item(self.tree.selection())['values'][2]
         self.tel1 = self.tree.item(self.tree.selection())['values'][5]
 
+        self.get_id_for_check(self.Get_FName, self.Get_LName, self.tel1)
+        self.get_count_tel()
+        if self.tc_id >= 2:
+            messagebox.showerror("Kontakt auswählen", "Dieser Kontakt hat schon zwei Telefonnummern!")
+        else:
+            self.window = Tk()
+            self.window.title("Add-Second Tel.-Nr")
+            self.window.geometry('220x120')
+            self.window.configure(background=self.co0)
+            self.window.resizable(width=False, height=False)
 
-        self.window = Tk()
-        self.window.title("Add-Second Tel.-Nr")
-        self.window.geometry('220x120')
-        self.window.configure(background=self.co0)
-        self.window.resizable(width=False, height=False)
+            # Tel.:
+            lb = Label (self.window, text='Tel.: ', bg=self.co0, fg=self.co1)
+            lb.place(x=10, y=28, width= 28, height=22)
+            self.get_phone = Entry(self.window)
+            self.get_phone.place(x=40, y=28, width= 140, height=22)
 
-        # Tel.:
-        lb = Label (self.window, text='Tel.: ', bg=self.co0, fg=self.co1)
-        lb.place(x=10, y=28, width= 28, height=22)
-        self.get_phone = Entry(self.window)
-        self.get_phone.place(x=40, y=28, width= 140, height=22)
+            self.l = Label(self.window, bg=self.co2)
+            self.l.place(x=0, y=0, width=280, height=10)
+            self.lbl = Label(self.window, bg=self.co2)
+            self.lbl.place(x=0, y=110, width=280, height=10)
 
-        self.l = Label(self.window, bg=self.co2)
-        self.l.place(x=0, y=0, width=280, height=10)
-        self.lbl = Label(self.window, bg=self.co2)
-        self.lbl.place(x=0, y=110, width=280, height=10)
-
-        button = Button(self.window, text='Änderungen speichern', bg=self.co2, fg=self.co0, command=self.adding_tel)
-        button.place(x=40, y=80, width= 138, height=22)
-        self.window.mainloop()
+            button = Button(self.window, text='Änderungen speichern', bg=self.co2, fg=self.co0, command=self.adding_tel)
+            button.place(x=40, y=80, width= 138, height=22)
+            self.window.mainloop()
 
         
 
@@ -397,6 +408,7 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
             self.get_name_id(Fname, Lname, tel1)
             self.add_phone(str(phone), bool(0))
             self.window.destroy()
+            self.viewing_records()
 
     #---------------------------------------------Edit-Entry----------------------------------------------------#
 
@@ -516,6 +528,7 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
 
             Button(self.edadr, text='Änderungen speichern', bg=self.co2, fg=self.co0, command=self.update_adr).grid(row=8, column=2, sticky=W)
             self.edadr.mainloop()
+            self.viewing_records()
 
     def edit_second_tel(self):
         if not self.tree.selection():
@@ -546,6 +559,7 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
 
             Button(self.ed, text='Änderungen speichern', bg=self.co2, fg=self.co0, command=self.update_tel).grid(row=8, column=2, sticky=W)
             self.ed.mainloop()
+            self.viewing_records()
 
     def update_adr(self):
         if self.plz_.get() == '' or self.city.get() == '' or self.street_.get() == '' or self.hNR.get() == '':

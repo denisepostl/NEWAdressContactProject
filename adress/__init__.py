@@ -22,6 +22,7 @@ from .delete_for_gui import Delete_Contact
 from .check_entry import Check_Entry
 from .count_screen import Counting
 from .add_check import Checking
+from .add_only_one_second_adress import Accept_Adress
 
 
 """Export the classes of the adress-module"""
@@ -47,5 +48,6 @@ __exports__ = [
     Delete_Contact,
     Check_Entry,
     Counting,
-    Checking
+    Checking,
+    Accept_Adress
 ]
