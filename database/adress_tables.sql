@@ -1,0 +1,24 @@
+CREATE TABLE Contact(
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    First_Name VARCHAR,
+    LastName VARCHAR
+);
+
+CREATE TABLE Adress(
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Street VARCHAR,
+    PostCode VARCHAR,
+    City VARCHAR,
+    HouseNumber NVARCHAR,
+    Contact_ID INT,
+    FOREIGN KEY(Contact_ID) REFERENCES Contact(ID)
+
+);
+
+CREATE TABLE PhoneNumber(
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    PhoneNumber VARCHAR UNIQUE,
+    Contact_ID INT,
+    FOREIGN KEY(Contact_ID) REFERENCES Contact(ID)
+
+);
