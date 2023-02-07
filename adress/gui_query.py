@@ -225,22 +225,38 @@ class MainWinQuery(Accept_Adress, QuerySearchBy):
         self.adresse = self.tree.item(self.tree.selection())['values'][3]
         self.adresse2 = self.tree.item(self.tree.selection())['values'][4]
         self.tel = self.tree.item(self.tree.selection())['values'][5]
+        self.tel2 = self.tree.item(self.tree.selection())['values'][6]
         self.imgProfile="img/img_/profile_" + str(self.idSelect) + "." + "jpg"
         self.load = Image.open(self.imgProfile)
         self.load.thumbnail((90, 120))
         self.photo = ImageTk.PhotoImage(self.load, master=self.win)
         Profile[1] = self.photo
         self.lblImage = Label(self.win, bg= "black",image=self.photo)
-        self.lblImage.place(x=40, y=400)
+        self.lblImage.place(x=40, y=410)
         self.lname = Label(self.win, width=40, anchor="w", text="Name: " + str(self.first_name) + " " +str(self.last_name), bg=self.co0)
-        self.lname.place(x=148, y=400)
+        self.lname.place(x=148, y=430)
 
         self.splitting = self.adresse.split(',')
         self.ladr = Label(self.win, width=40, anchor="w", text="Adresse: " + str(self.splitting[0]) + str(self.splitting[3]) + str(self.splitting[1]) + str(self.splitting[2]), bg=self.co0)
-        self.ladr.place(x=148, y=445)
+        self.ladr.place(x=148, y=460)
 
         self.lphone = Label(self.win, width=40, anchor="w", text="Tel.-Nr.: " + str(self.tel), bg=self.co0)
-        self.lphone.place(x=148, y=490)
+        self.lphone.place(x=148, y=498)
+
+        self.get_id_for_check(self.first_name, self.last_name, self.tel)
+        self.get_count_tel()
+        self.get_count_adr()
+        if self.tc_id == 2:
+            self.lphone1 = Label(self.win, width=40, anchor="w", text="2. Tel.-Nr.: " + str(self.tel2), bg=self.co0)
+            self.lphone1.place(x=148, y=514)
+        if self.tc_id != 2:
+            self.lphone1.destroy()
+        if self.c_id == 2:
+            self.part = self.adresse2.split(',')
+            self.ladr1 = Label(self.win, width=40, anchor="w", text="Neben-Adresse: " + str(self.part[0]) + str(self.part[3]) + str(self.part[1]) + str(self.part[2]), bg=self.co0)
+            self.ladr1.place(x=148, y=476)
+        if self.c_id != 2:
+            self.ladr1.destroy()
 
 def main():
     win = MainWinQuery()

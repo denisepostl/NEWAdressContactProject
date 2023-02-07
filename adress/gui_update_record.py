@@ -404,7 +404,7 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
             messagebox.showwarning("Warning", "Feld darf nicht leer sein")  # raise messagebox if entry is empty
         elif not phone.strip().isnumeric():
             messagebox.showwarning("Warning", "Bitte Datentyp beachten!")
-        elif self.check_for_same_tel(tel1):
+        elif self.check_for_same_tel(phone):
             messagebox.showwarning("Warning", "Telefonnummer ist schon vorhanden!")
         else:
             self.get_name_id(Fname, Lname, tel1)
