@@ -58,8 +58,9 @@ class MainWinDelete(QuerySearchBy, Delete_Contact, Updating):
         self.deleting.destroy()
 
     def delete_c(self):
-        self.get_id_ = self.get_name_id(self.name, self.lname)
-        self.get_id(self.name, self.lname)
+        self.tel = self.tree.item(self.tree.selection())['values'][5]
+        self.get_id_ = self.get_name_id(self.name, self.lname, self.tel)
+        self.get_id(self.name, self.lname, self.tel)
         con = self.connection
         cur = con.cursor()
         cur.execute("delete from Contact where ID = {}".format(self.idSelect))
@@ -80,7 +81,7 @@ class MainWinDelete(QuerySearchBy, Delete_Contact, Updating):
         for row in self.contact:
             self.tree.insert('', END, values=row)
 
-    def get_name_id(self, first_name, last_name):
+    def get_name_id(self, first_name, last_name, tel):
         """Get the ID from the Contact by first and last name"""
         cur = self.connection.cursor()
         query = """
@@ -88,13 +89,13 @@ class MainWinDelete(QuerySearchBy, Delete_Contact, Updating):
 	            c.ID
             from Contact c
             join PhoneNumber a
-                on c.ID=a.ID
+                on c.ID=a.Contact_ID
             join Adress b
-                on b.ID = c.ID
+                on b.Contact_ID = c.ID
             join Kategorie d
-                on c.ID = d.ID
-            where First_Name like "%s" and LastName like "%s"
-        """ % (first_name, last_name)
+                on c.ID = d.Contact_ID
+            where c.First_Name like "%s" and c.LastName like "%s" and a.PhoneNumber like "%s"
+        """ % (first_name, last_name, tel)
         cur.execute(query)
         ID = cur.fetchall()
         tup = ID[0]

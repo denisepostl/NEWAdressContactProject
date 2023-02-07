@@ -163,14 +163,14 @@ class QuerySearchBy():
             PhoneNumber2.PhoneNumber AS Tel2,
             Kategorie.Kategorie
             FROM Adress_Phone
+			JOIN PhoneNumber ON Contact.ID = PhoneNumber.Contact_ID
             JOIN Kategorie ON Contact.ID = Kategorie.Contact_ID
             JOIN Contact ON Adress_Phone.ID = Contact.ID
             LEFT JOIN Adress Adress1 ON Adress_Phone.ID = Adress1.Contact_ID AND Adress1.Main_Adress = 1
             LEFT JOIN Adress Adress2 ON Adress_Phone.ID = Adress2.Contact_ID AND Adress2.Main_Adress = 0
             LEFT JOIN PhoneNumber PhoneNumber1 ON Adress_Phone.ID = PhoneNumber1.Contact_ID AND PhoneNumber1.Main_Tel = 1
             LEFT JOIN PhoneNumber PhoneNumber2 ON Adress_Phone.ID = PhoneNumber2.Contact_ID AND PhoneNumber2.Main_Tel = 0
-            WHERE Adress_Phone.Adress_Count > 0 OR Adress_Phone.PhoneNumber_Count > 0
-            AND Contact.First_Name like "%s" AND Contact.LastName like "%s"
+            WHERE (Adress_Phone.Adress_Count > 0 OR Adress_Phone.PhoneNumber_Count > 0)
             AND PhoneNumber.PhoneNumber like "%s"
         """%(tel)
         cur.execute(query)
@@ -205,7 +205,7 @@ class QuerySearchBy():
             LEFT JOIN Adress Adress2 ON Adress_Phone.ID = Adress2.Contact_ID AND Adress2.Main_Adress = 0
             LEFT JOIN PhoneNumber PhoneNumber1 ON Adress_Phone.ID = PhoneNumber1.Contact_ID AND PhoneNumber1.Main_Tel = 1
             LEFT JOIN PhoneNumber PhoneNumber2 ON Adress_Phone.ID = PhoneNumber2.Contact_ID AND PhoneNumber2.Main_Tel = 0
-            WHERE Adress_Phone.Adress_Count > 0 OR Adress_Phone.PhoneNumber_Count > 0
+            WHERE (Adress_Phone.Adress_Count > 0 OR Adress_Phone.PhoneNumber_Count > 0)
             AND Kategorie.Kategorie like "%s"
         """%(kat)
         cur.execute(query)
@@ -240,7 +240,7 @@ class QuerySearchBy():
             LEFT JOIN Adress Adress2 ON Adress_Phone.ID = Adress2.Contact_ID AND Adress2.Main_Adress = 0
             LEFT JOIN PhoneNumber PhoneNumber1 ON Adress_Phone.ID = PhoneNumber1.Contact_ID AND PhoneNumber1.Main_Tel = 1
             LEFT JOIN PhoneNumber PhoneNumber2 ON Adress_Phone.ID = PhoneNumber2.Contact_ID AND PhoneNumber2.Main_Tel = 0
-            WHERE Adress_Phone.Adress_Count > 0 OR Adress_Phone.PhoneNumber_Count > 0
+            WHERE (Adress_Phone.Adress_Count > 0 OR Adress_Phone.PhoneNumber_Count > 0)
             AND Contact.ID like "%d"
         """%(id)
         cur.execute(query)

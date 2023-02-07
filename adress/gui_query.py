@@ -7,12 +7,13 @@ from tkinter import filedialog
 import os
 from PIL import Image, ImageTk
 from adress.query_search_by import QuerySearchBy
+from adress.add_only_one_second_adress import Accept_Adress
 import sqlite3
 
 #load the image
 Profile = {1: ""}
 
-class MainWinQuery(QuerySearchBy):
+class MainWinQuery(Accept_Adress, QuerySearchBy):
 
     def __init__(self):
         """Initialize database connection and define settings like color, geometry"""
@@ -222,6 +223,7 @@ class MainWinQuery(QuerySearchBy):
         self.first_name = self.tree.item(self.tree.selection())['values'][1]
         self.last_name = self.tree.item(self.tree.selection())['values'][2]
         self.adresse = self.tree.item(self.tree.selection())['values'][3]
+        self.adresse2 = self.tree.item(self.tree.selection())['values'][4]
         self.tel = self.tree.item(self.tree.selection())['values'][5]
         self.imgProfile="img/img_/profile_" + str(self.idSelect) + "." + "jpg"
         self.load = Image.open(self.imgProfile)
@@ -229,17 +231,16 @@ class MainWinQuery(QuerySearchBy):
         self.photo = ImageTk.PhotoImage(self.load, master=self.win)
         Profile[1] = self.photo
         self.lblImage = Label(self.win, bg= "black",image=self.photo)
-        self.lblImage.place(x=40, y=380)
+        self.lblImage.place(x=40, y=400)
         self.lname = Label(self.win, width=40, anchor="w", text="Name: " + str(self.first_name) + " " +str(self.last_name), bg=self.co0)
         self.lname.place(x=148, y=400)
 
         self.splitting = self.adresse.split(',')
         self.ladr = Label(self.win, width=40, anchor="w", text="Adresse: " + str(self.splitting[0]) + str(self.splitting[3]) + str(self.splitting[1]) + str(self.splitting[2]), bg=self.co0)
-        self.ladr.place(x=148, y=430)
+        self.ladr.place(x=148, y=445)
 
         self.lphone = Label(self.win, width=40, anchor="w", text="Tel.-Nr.: " + str(self.tel), bg=self.co0)
-        self.lphone.place(x=148, y=460)
-
+        self.lphone.place(x=148, y=490)
 
 def main():
     win = MainWinQuery()
