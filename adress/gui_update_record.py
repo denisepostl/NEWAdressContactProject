@@ -215,9 +215,11 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
         self.idSelect =  self.tree.item(self.tree.selection())['values'][0] # let set the record
         self.GetFN = self.tree.item(self.tree.selection())['values'][1]  # get the name
         self.GetLN = self.tree.item(self.tree.selection())['values'][2]
+        self.tel1 = self.tree.item(self.tree.selection())['values'][5]
+
         self.imgProfile="img/img_/profile_" + str(self.idSelect) + "." + "jpg"
         os.remove(self.imgProfile)
-        id = self.get_name_id(self.GetFN, self.GetLN)
+        id = self.get_name_id(self.GetFN, self.GetLN, self.tel1)
         filename = self.entryPhoto.get()
         im = Image.open(filename)
         rgb_im = im.convert('RGB')
@@ -240,6 +242,8 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
         self.tree.item(self.tree.selection())['values'][0] # let set the record
         self.GetFName_ = self.tree.item(self.tree.selection())['values'][1]  # get the name
         self.GetLName_ = self.tree.item(self.tree.selection())['values'][2]
+        self.tel1 = self.tree.item(self.tree.selection())['values'][5]
+
 
         self.root = tk.Tk()  # new window
         self.root.configure(background=self.co0)
@@ -262,11 +266,11 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
         LastName = self.GetLName_
 
         self.selected = self.combo.get()
-        self.get_name_id(FirstName, LastName)
+        self.get_name_id(FirstName, LastName, self.tel1)
         self.update_Category(self.selected, self.name_id)
         self.connection.commit()
         self.root.destroy()
-        self.get_id(FirstName, LastName)
+        self.get_id(FirstName, LastName, self.tel1)
         self.viewing_records()
 
 
@@ -279,6 +283,8 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
         self.tree.item(self.tree.selection())['values'][0]#let set the contact
         self.GetFName = self.tree.item(self.tree.selection())['values'][1]#get the name
         self.GetLName = self.tree.item(self.tree.selection())['values'][2]
+        self.tel1 = self.tree.item(self.tree.selection())['values'][5]
+
 
         self.new = Tk()
         self.new.title("Add-Second Tel.-Nr")
@@ -340,7 +346,7 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
         elif not housenr.strip().isnumeric():
             messagebox.showwarning("Warning", "Bitte Datentyp beachten!")
         else: 
-            self.get_name_id(FirstName, LastName)
+            self.get_name_id(FirstName, LastName, self.tel1)
             self.add_adress_(str(plz), str(street), str(city), str(housenr), bool(0))
             self.new.destroy()
 
@@ -352,6 +358,8 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
         self.tree.item(self.tree.selection())['values'][0]#let the record select
         self.Get_FName = self.tree.item(self.tree.selection())['values'][1]#get the name
         self.Get_LName = self.tree.item(self.tree.selection())['values'][2]
+        self.tel1 = self.tree.item(self.tree.selection())['values'][5]
+
 
         self.window = Tk()
         self.window.title("Add-Second Tel.-Nr")
@@ -380,12 +388,13 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
         Fname = self.Get_FName
         Lname = self.Get_LName
         phone = self.get_phone.get()
+        tel1 = self.tel1
         if phone == '':
             messagebox.showwarning("Warning", "Feld darf nicht leer sein")  # raise messagebox if entry is empty
         elif not phone.strip().isnumeric():
             messagebox.showwarning("Warning", "Bitte Datentyp beachten!")
         else:
-            self.get_name_id(Fname, Lname)
+            self.get_name_id(Fname, Lname, tel1)
             self.add_phone(str(phone), bool(0))
             self.window.destroy()
 
@@ -516,6 +525,8 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
         # select records like Name, Adress, Telefone
         self.F_Name = self.tree.item(self.tree.selection())['values'][1]
         self.L_Name = self.tree.item(self.tree.selection())['values'][2]
+        self.tel1 = self.tree.item(self.tree.selection())['values'][5]
+
         self.get_second_tel(self.F_Name, self.L_Name)
         if not self.telmain:
             messagebox.showerror("Kontakt auswählen", "Es ist keine zweite Telefonnummer vorhanden!")
@@ -550,8 +561,8 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
             messagebox.showwarning("Warning", "Bitte Datentyp beachten!")
             self.edadr.destroy()
         else: 
-            self.get_name_id(self.F_Name, self.L_Name) 
-            self.get_id(self.F_Name, self.L_Name)
+            self.get_name_id(self.F_Name, self.L_Name, self.tel1) 
+            self.get_id(self.F_Name, self.L_Name, self.tel1)
             self.update_PostCode(str(self.plz_.get()), self.name_id, str(self.adr2[1].strip()))
             self.update_City(str(self.city.get()), self.name_id, str(self.adr2[2].strip()))
             self.update_Street(str(self.street_.get()), self.name_id, str(self.adr2[0].strip()))
@@ -567,8 +578,8 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
             messagebox.showwarning("Warning", "Bitte Datentyp beachten!")
             self.ed.destroy()
         else: 
-            self.get_name_id(self.F_Name, self.L_Name) 
-            self.get_id(self.F_Name, self.L_Name)
+            self.get_name_id(self.F_Name, self.L_Name, self.tel1) 
+            self.get_id(self.F_Name, self.L_Name, self.tel1)
             self.update_Tel(str(self.phone_.get()), self.name_id, str(self.tel2))
             self.ed.destroy()
             self.viewing_records()
@@ -588,8 +599,8 @@ class MainWinUpdate(Checking, QuerySearchBy, Updating, AddSecondRecord):
             messagebox.showwarning("Warning", "Bitte Datentyp beachten!")
             self.edit_wind.destroy()
         else: 
-            self.get_name_id(self.F_Name, self.L_Name) 
-            self.get_id(self.F_Name, self.L_Name)
+            self.get_name_id(self.F_Name, self.L_Name, self.tel1) 
+            self.get_id(self.F_Name, self.L_Name, self.tel1)
             self.update_FName(str(self.new_name.get()), self.My_ID)
             self.update_LName(str(self.lname.get()), self.My_ID)
             self.update_PostCode(str(self.plz_.get()), self.name_id, str(self.adr1[1].strip()))

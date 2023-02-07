@@ -7,7 +7,7 @@ class AddSecondRecord():
     def __init__(self):
         self.connection = sqlite3.connect("database/adress_cat.db")
 
-    def get_name_id(self, first_name, last_name):
+    def get_name_id(self, first_name, last_name, tel):
         """Method which return the ID of the contact"""
         cur = self.connection.cursor()
         query = """
@@ -15,11 +15,11 @@ class AddSecondRecord():
 	            c.ID
             from Contact c
             join PhoneNumber a
-                on c.ID=a.ID
+                on c.ID=a.Contact_ID
             join Adress b
-                on b.ID = c.ID
-            where First_Name like "%s" and LastName like "%s"
-        """ % (first_name, last_name)
+                on b.Contact_ID = c.ID
+            where First_Name like "%s" and LastName like "%s" and a.PhoneNumber like "%s"
+        """ % (first_name, last_name, tel)
         cur.execute(query)
         ID = cur.fetchall()
         tup = ID[0]

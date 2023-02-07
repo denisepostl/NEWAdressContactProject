@@ -6,16 +6,18 @@ class Updating():
         self.connection = sqlite3.connect("database/adress_cat.db")
 
 
-    def get_id(self, first_name, last_name):
+    def get_id(self, first_name, last_name, tel):
         """This method is used to return the id from record when the user wants to update a record."""
         cur = self.connection.cursor()
         get_id = """
             SELECT
 	            a.ID
             from Contact a
+            join PhoneNumber c
+                on c.Contact_ID = a.ID
             where a.First_Name like "%s"
-            and a.LastName like "%s";
-        """ %(first_name, last_name)
+            and a.LastName like "%s" and c.PhoneNumber like "%s";
+        """ %(first_name, last_name, tel)
 
         cur.execute(get_id)
         
