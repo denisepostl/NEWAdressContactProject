@@ -545,8 +545,6 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
         self.get_second_tel(self.F_Name, self.L_Name)
         if not self.telmain:
             messagebox.showerror("Kontakt auswählen", "Es ist keine zweite Telefonnummer vorhanden!")
-        elif self.check_for_same_tel(self.tel1):
-            messagebox.showwarning("Warning", "Telefonnummer ist schon vorhanden!")
         else:
             self.tel2 = self.tree.item(self.tree.selection())['values'][6]
     
