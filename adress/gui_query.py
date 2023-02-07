@@ -250,13 +250,16 @@ class MainWinQuery(Accept_Adress, QuerySearchBy):
             self.lphone1 = Label(self.win, width=40, anchor="w", text="2. Tel.-Nr.: " + str(self.tel2), bg=self.co0)
             self.lphone1.place(x=148, y=514)
         if self.tc_id != 2:
-            self.lphone1.destroy()
+            self.lphone1 = Label(self.win, width = 40, bg=self.co0)
+            self.lphone1.place(x=148, y=514)
         if self.c_id == 2:
             self.part = self.adresse2.split(',')
             self.ladr1 = Label(self.win, width=40, anchor="w", text="Neben-Adresse: " + str(self.part[0]) + str(self.part[3]) + str(self.part[1]) + str(self.part[2]), bg=self.co0)
-            self.ladr1.place(x=148, y=476)
+            self.ladr1.place(x=148, y=478)
+
         if self.c_id != 2:
-            self.ladr1.destroy()
+            self.ladr1 = Label(self.win, width = 40, bg=self.co0)
+            self.ladr1.place(x=148, y=478)
 
 def main():
     win = MainWinQuery()
