@@ -404,6 +404,8 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
             messagebox.showwarning("Warning", "Feld darf nicht leer sein")  # raise messagebox if entry is empty
         elif not phone.strip().isnumeric():
             messagebox.showwarning("Warning", "Bitte Datentyp beachten!")
+        elif self.check_for_same_tel(tel1):
+            messagebox.showwarning("Warning", "Telefonnummer ist schon vorhanden!")
         else:
             self.get_name_id(Fname, Lname, tel1)
             self.add_phone(str(phone), bool(0))
@@ -543,6 +545,8 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
         self.get_second_tel(self.F_Name, self.L_Name)
         if not self.telmain:
             messagebox.showerror("Kontakt auswählen", "Es ist keine zweite Telefonnummer vorhanden!")
+        elif self.check_for_same_tel(self.tel1):
+            messagebox.showwarning("Warning", "Telefonnummer ist schon vorhanden!")
         else:
             self.tel2 = self.tree.item(self.tree.selection())['values'][6]
     
