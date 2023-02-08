@@ -492,8 +492,9 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
         self.F_Name = self.tree.item(self.tree.selection())['values'][1]
         self.L_Name = self.tree.item(self.tree.selection())['values'][2]
         self.adresse2 = self.tree.item(self.tree.selection())['values'][4]
-        self.tel2 = self.tree.item(self.tree.selection())['values'][6]
-        self.get_second_adr(self.F_Name, self.L_Name, self.tel2)
+        self.tele = self.tree.item(self.tree.selection())['values'][5]
+
+        self.get_second_adr(self.F_Name, self.L_Name, self.tele)
         if not self.adrmain:
             messagebox.showerror("Kontakt auswählen", "Es ist keine zweite Adresse vorhanden")
 
