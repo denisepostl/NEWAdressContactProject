@@ -531,7 +531,6 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
 
             Button(self.edadr, text='Änderungen speichern', bg=self.co2, fg=self.co0, command=self.update_adr).grid(row=8, column=2, sticky=W)
             self.edadr.mainloop()
-            self.viewing_records()
 
     def edit_second_tel(self):
         if not self.tree.selection():
@@ -564,7 +563,6 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
 
             Button(self.ed, text='Änderungen speichern', bg=self.co2, fg=self.co0, command=self.update_tel).grid(row=8, column=2, sticky=W)
             self.ed.mainloop()
-            self.viewing_records()
 
     def update_adr(self):
         self.tel1 = self.tree.item(self.tree.selection())['values'][5]
