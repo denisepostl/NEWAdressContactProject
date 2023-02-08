@@ -492,7 +492,8 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
         self.F_Name = self.tree.item(self.tree.selection())['values'][1]
         self.L_Name = self.tree.item(self.tree.selection())['values'][2]
         self.adresse2 = self.tree.item(self.tree.selection())['values'][4]
-        self.get_second_adr(self.F_Name, self.L_Name)
+        self.tel2 = self.tree.item(self.tree.selection())['values'][6]
+        self.get_second_adr(self.F_Name, self.L_Name, self.tel2)
         if not self.adrmain:
             messagebox.showerror("Kontakt auswählen", "Es ist keine zweite Adresse vorhanden")
 
@@ -541,8 +542,10 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
         self.F_Name = self.tree.item(self.tree.selection())['values'][1]
         self.L_Name = self.tree.item(self.tree.selection())['values'][2]
         self.tel1 = self.tree.item(self.tree.selection())['values'][5]
+        self.tel2 = self.tree.item(self.tree.selection())['values'][6]
 
-        self.get_second_tel(self.F_Name, self.L_Name)
+
+        self.get_second_tel(self.F_Name, self.L_Name, self.tel2)
         if not self.telmain:
             messagebox.showerror("Kontakt auswählen", "Es ist keine zweite Telefonnummer vorhanden!")
         else:
@@ -564,6 +567,7 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
             self.viewing_records()
 
     def update_adr(self):
+        """Method for updating the second adress"""
         if self.plz_.get() == '' or self.city.get() == '' or self.street_.get() == '' or self.hNR.get() == '':
             messagebox.showwarning("Warning", "Feld darf nicht leer sein")  # raise messagebox if entry is empty
             self.edadr.destroy()
@@ -587,6 +591,7 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
             self.viewing_records()
 
     def update_tel(self):
+        """Method for updating the second adress"""
         if self.phone_.get() == '':
             messagebox.showwarning("Warning", "Feld darf nicht leer sein")  # raise messagebox if entry is empty
             self.ed.destroy()
