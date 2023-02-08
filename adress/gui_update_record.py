@@ -567,6 +567,7 @@ class MainWinUpdate(Accept_Adress, Checking, QuerySearchBy, Updating, AddSecondR
             self.viewing_records()
 
     def update_adr(self):
+        self.tel1 = self.tree.item(self.tree.selection())['values'][5]
         """Method for updating the second adress"""
         if self.plz_.get() == '' or self.city.get() == '' or self.street_.get() == '' or self.hNR.get() == '':
             messagebox.showwarning("Warning", "Feld darf nicht leer sein")  # raise messagebox if entry is empty
