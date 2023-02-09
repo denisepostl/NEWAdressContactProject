@@ -43,12 +43,14 @@ def test_insert_address(in_memory_db):
     insert.insert_Name("John", "Doe")
     insert.insert_Address("12345", "Main St", "San Francisco", "42", 1)
     cursor = in_memory_db.cursor()
-    cursor.execute("SELECT a.PostCode, a.Street, a.City, a.HouseNumber from adress a join contact c on a. ID = c.ID")
+    cursor.execute("SELECT a.PostCode, a.Street, a.City, a.HouseNumber, a.Main_Adress from adress a join contact c on a. ID = c.ID")
     result = cursor.fetchone()
     assert result[0] == '12345'
     assert result[1] == 'Main St'
     assert result[2] == 'San Francisco'
     assert result[3] == '42'
+    assert result[4] == 1
+
 
 
 def test_insert_category(in_memory_db):
@@ -70,9 +72,10 @@ def test_insert_phone_number(in_memory_db):
     insert.insert_Name("John", "Doe")
     insert.insert_PhoneNumber("0644202010", 1)
     cursor = in_memory_db.cursor()
-    cursor.execute("SELECT a.PhoneNumber from PhoneNumber a join contact c on a. ID = c.ID")
+    cursor.execute("SELECT a.PhoneNumber, a.Main_Tel from PhoneNumber a join contact c on a. ID = c.ID")
     result = cursor.fetchone()
     assert result[0] == '0644202010'
+    assert result[1] == 1
 
 def insert_Name(self, first_name, last_name):
         """Method for inserting a name"""
